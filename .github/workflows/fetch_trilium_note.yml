@@ -13,17 +13,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          persist-credentials: true  # required for pushing back to repo
+          persist-credentials: true
+          fetch-depth: 0           # required for pushing to branch
+
+      - name: Set up branch name
+        run: |
+          echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
 
       - name: Download Trilium shared note
         run: |
           curl -sSL "http://2ndbrain.psychlab.eu:22002/share/z09ChFJuqwaG" -o index.html
 
-      - name: Commit and push the file
+      - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
+
           git add index.html
           git commit -m "Update shared note [auto]" || echo "Nothing to commit"
-          git push origin HEAD
+          git push origin HEAD:$BRANCH_NAME

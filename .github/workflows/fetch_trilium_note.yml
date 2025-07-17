@@ -17,15 +17,11 @@ jobs:
         run: |
           curl -sSL "http://2ndbrain.psychlab.eu:22002/share/z09ChFJuqwaG" -o index.html
 
-      - name: Commit and push if changed
+      - name: Commit and push the file
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          if git diff --quiet index.html; then
-            echo "No changes"
-          else
-            git add index.html
-            git commit -m "Daily update"
-            git push
-          fi
+          git add index.html
+          git commit -m "Update shared note [auto]" || echo "Nothing to commit"
+          git push

@@ -18,7 +18,7 @@ jobs:
 
       - name: Download Trilium shared note
         run: |
-          curl -sSL "http://2ndbrain.psychlab.eu:22002/share/z09ChFJuqwaG" -o index.html
+          curl -sSL "http://2ndbrain.psychlab.eu:22002/share/z09ChFJuqwaG" -o Go_to_study.html
 
       - name: Configure Git
         run: |

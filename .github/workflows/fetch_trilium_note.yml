@@ -6,7 +6,7 @@ on:
   workflow_dispatch:        # Manual trigger from GitHub UI
 
 jobs:
-  fetch-and-commit:
+  fetch-note:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,21 +14,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: true
-          fetch-depth: 0           # required for pushing to branch
-
-      - name: Set up branch name
-        run: |
-          echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+          fetch-depth: 0  # Required for committing/pushing
 
       - name: Download Trilium shared note
         run: |
           curl -sSL "http://2ndbrain.psychlab.eu:22002/share/z09ChFJuqwaG" -o index.html
 
-      - name: Commit and push changes
+      - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Commit and push changes
+        run: |
           git add index.html
           git commit -m "Update shared note [auto]" || echo "Nothing to commit"
-          git push origin HEAD:$BRANCH_NAME
+          git push origin HEAD

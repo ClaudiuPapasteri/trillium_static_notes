@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true  # required for pushing back to repo
 
       - name: Download Trilium shared note
         run: |
@@ -21,7 +23,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
+          
           git add index.html
           git commit -m "Update shared note [auto]" || echo "Nothing to commit"
-          git push
+          git push origin HEAD

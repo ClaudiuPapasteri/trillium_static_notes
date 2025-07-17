@@ -1,0 +1,31 @@
+name: Archive Trilium Shared Note
+
+on:
+  schedule:
+    - cron: '0 21 * * *'   # Runs at 12 AM Bucharest (UTC+3 → 21:00 UTC)
+  workflow_dispatch:        # Manual trigger from GitHub UI
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download Trilium shared note
+        run: |
+          curl -sSL "http://2ndbrain.psychlab.eu:22002/share/z09ChFJuqwaG" -o index.html
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet index.html; then
+            echo "No changes"
+          else
+            git add index.html
+            git commit -m "Daily update"
+            git push
+          fi

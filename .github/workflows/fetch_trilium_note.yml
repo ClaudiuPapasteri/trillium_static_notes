@@ -21,14 +21,6 @@ jobs:
           curl -sSL "http://2ndbrain.psychlab.eu:22002/share/z09ChFJuqwaG" -o Go_to_study.html
           curl -sSL "http://2ndbrain.psychlab.eu:22002/share/fv1ENOuExVYS" -o Go_to_get.html
 
-      - name: Generate index.html
-        run: |
-          echo "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Trilium Notes</title></head><body><h1>Archived Notes</h1><ul>" > index.html
-          for file in note*.html; do
-            echo "<li><a href=\"$file\">$file</a></li>" >> index.html
-          done
-          echo "</ul></body></html>" >> index.html
-
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"

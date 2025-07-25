@@ -2,7 +2,7 @@ name: Archive Trilium Shared Note
 
 on:
   schedule:
-    - cron: '0 21 * * *'   # Runs at 12 AM Bucharest (UTC+3 → 21:00 UTC)
+    - cron: '0 9 * * *'   # Runs at 12 PM Bucharest (UTC+3 → 9:00 UTC)
   workflow_dispatch:        # Manual trigger from GitHub UI
 
 jobs:
